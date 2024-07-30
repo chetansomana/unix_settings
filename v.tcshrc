@@ -1,0 +1,31 @@
+# Default user login script for tcsh
+
+set user_tcshrc="$HOME/.tcshrc.user"
+
+if (! $?EDA_ENV) then
+        # Set EDA environment to NXPDE by default, if not set
+        # Change to "TR" for L-FSL tools
+        setenv EDA_ENV "NXPDE"
+endif
+
+tty -s
+if ($? == 0) then
+
+	setenv MANWIDTH 90
+	# Pick your favorite prompt
+	set prompt="%n@%m$ "
+	if (! $?TERM) then
+		setenv TERM xterm
+	endif
+	setenv EDITOR vim
+ 	setenv FCEDIT "${EDITOR}"
+ 	setenv SERI_EDITOR "${EDITOR}"
+	# setenv PAGER "/cadappl_sde/bin/pager"
+endif
+
+# Freescale custom scripts
+if (-r "${user_tcshrc}") then
+	source "${user_tcshrc}"
+endif
+
+source ~/my.tcshrc
